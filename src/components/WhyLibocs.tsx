@@ -26,7 +26,7 @@ export const WhyLibocs: React.FC = () => {
           </h2>
 
           <p className="text-stone-600 dark:text-neutral-400 text-sm sm:text-base leading-relaxed">
-            Four guiding principles behind every pair created at NIBOCS SHOE.
+            Four guiding principles behind every pair created at NIBOCS Shoes.
           </p>
         </div>
 

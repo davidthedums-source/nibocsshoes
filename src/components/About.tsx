@@ -24,7 +24,7 @@ export const About: React.FC = () => {
 
             <div className="space-y-4 text-stone-700 dark:text-neutral-300 text-sm sm:text-base leading-relaxed">
               <p>
-                NIBOCS SHOE is a footwear business focused on making and selling shoes while combining craftsmanship, modern design and customer satisfaction.
+                NIBOCS Shoes is a footwear business focused on making and selling shoes while combining craftsmanship, modern design and customer satisfaction.
               </p>
               <p className="text-stone-600 dark:text-neutral-400">
                 Operating from Sangotedo in Lagos, Nigeria, our operations span complete in-house footwear manufacturing and direct consumer retail. Whether you are seeking refined formal dress shoes, everyday casual styles, or custom-commissioned footwear, each pair is crafted with careful attention to material selection and structural balance.
@@ -87,7 +87,7 @@ export const About: React.FC = () => {
 
                 <div className="absolute bottom-5 left-5 right-5 figma-panel p-4 rounded-xl text-xs space-y-1 border border-white/10">
                   <div className="flex items-center justify-between text-neutral-300 font-mono text-[11px]">
-                    <span className="font-semibold text-white">NIBOCS SHOE</span>
+                    <span className="font-semibold text-white">NIBOCS Shoes</span>
                     <span className="text-[#c69c6d]">Sangotedo, Lagos</span>
                   </div>
                   <p className="text-neutral-400 text-[11px] leading-relaxed">

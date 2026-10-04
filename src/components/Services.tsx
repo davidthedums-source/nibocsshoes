@@ -36,7 +36,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
           </h2>
 
           <p className="text-stone-600 dark:text-neutral-400 text-sm sm:text-base leading-relaxed">
-            From single bespoke commissions to high-capacity manufacturing, NIBOCS SHOE delivers excellence at every tier of footwear production.
+            From single bespoke commissions to high-capacity manufacturing, NIBOCS Shoes delivers excellence at every tier of footwear production.
           </p>
         </div>
 

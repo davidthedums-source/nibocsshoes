@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Sliders, ArrowUpRight, Palette, Layers, Ruler, CheckCircle2, MessageCircle, Sparkles } from 'lucide-react';
-import { ASSETS } from '../data/footwearData';
+import { Sliders, ArrowUpRight, Palette, Layers, Ruler, CheckCircle2, MessageCircle, Sparkles, Phone } from 'lucide-react';
+import { ASSETS, BUSINESS_INFO } from '../data/footwearData';
 import { handleImageError } from '../lib/imageUtils';
 
 interface AtelierStudioProps {
@@ -44,8 +44,8 @@ export const AtelierStudio: React.FC<AtelierStudioProps> = ({ onCommissionSpec }
 
   const currentSpecSummary = `${selectedSilhouette} · ${selectedLeather} · ${selectedSole} · ${selectedWelt} · Size: ${selectedSize}`;
 
-  const whatsappStudioLink = `https://wa.me/2349037880988?text=${encodeURIComponent(
-    `Hello NIBOCS SHOE! I configured a bespoke pair on the Atelier Studio:\n- Silhouette: ${selectedSilhouette}\n- Leather: ${selectedLeather}\n- Sole: ${selectedSole}\n- Welt: ${selectedWelt}\n- Size: ${selectedSize}\n- Monogram: ${monogram}\n\nPlease provide quotation and lead time.`
+  const whatsappStudioLink = `https://wa.me/2348025906080?text=${encodeURIComponent(
+    `Hello NIBOCS Shoes! I configured a bespoke pair on the Atelier Studio:\n- Silhouette: ${selectedSilhouette}\n- Leather: ${selectedLeather}\n- Sole: ${selectedSole}\n- Welt: ${selectedWelt}\n- Size: ${selectedSize}\n- Monogram: ${monogram}\n\nPlease provide quotation and lead time.`
   )}`;
 
   return (
@@ -331,15 +331,26 @@ export const AtelierStudio: React.FC<AtelierStudioProps> = ({ onCommissionSpec }
                     <ArrowUpRight className="w-4 h-4" />
                   </button>
 
-                  <a
-                    href={whatsappStudioLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#25D366] border border-[#25D366]/30 text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Send Spec to WhatsApp</span>
-                  </a>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <a
+                      href={`tel:${BUSINESS_INFO.phone}`}
+                      className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-200 hover:text-white border border-white/10 text-xs font-mono font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                      title={`Call ${BUSINESS_INFO.phone}`}
+                    >
+                      <Phone className="w-3.5 h-3.5 text-[#c69c6d]" />
+                      <span>Call {BUSINESS_INFO.phone}</span>
+                    </a>
+
+                    <a
+                      href={whatsappStudioLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 px-3 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#25D366] border border-[#25D366]/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

@@ -98,16 +98,30 @@ export const Footer: React.FC<FooterProps> = ({ onOpenOrderModal, onOpenDatabase
                 <MapPin className="w-4 h-4 text-[#c69c6d] shrink-0 mt-0.5" />
                 <span className="text-stone-700 dark:text-neutral-300">{BUSINESS_INFO.address}</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#c69c6d] shrink-0" />
+              
+              {/* Prominent Tap to Call Phone block */}
+              <div className="p-3 rounded-xl bg-stone-200/60 dark:bg-white/[0.04] border border-stone-300 dark:border-white/10 space-y-1.5">
+                <span className="text-[10px] uppercase font-mono text-[#8c6032] dark:text-[#c69c6d] font-bold block">
+                  Direct Line · Tap to Call
+                </span>
                 <a
                   href={`tel:${BUSINESS_INFO.phone}`}
-                  className="text-stone-700 dark:text-neutral-300 hover:text-stone-950 dark:hover:text-white font-mono"
+                  className="flex items-center gap-2 text-stone-950 dark:text-white hover:text-[#8c6032] dark:hover:text-[#c69c6d] font-mono text-base font-bold transition-colors"
+                  title={`Call ${BUSINESS_INFO.phone}`}
                 >
-                  {BUSINESS_INFO.phone}
+                  <Phone className="w-4 h-4 text-[#c69c6d] shrink-0" />
+                  <span>{BUSINESS_INFO.phone}</span>
+                </a>
+                <a
+                  href={`tel:${BUSINESS_INFO.phone}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-neutral-950 bg-[#c69c6d] hover:bg-[#d8b082] transition-colors"
+                >
+                  <Phone className="w-3 h-3" />
+                  <span>Call {BUSINESS_INFO.phone}</span>
                 </a>
               </div>
-              <div className="flex items-center gap-2.5">
+
+              <div className="flex items-center gap-2.5 pt-1">
                 <Mail className="w-4 h-4 text-[#c69c6d] shrink-0" />
                 <a
                   href={`mailto:${BUSINESS_INFO.email}`}
@@ -122,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenOrderModal, onOpenDatabase
 
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500 dark:text-neutral-400">
-          <p>© 2026 NIBOCS SHOE. All rights reserved.</p>
+          <p>© 2026 NIBOCS Shoes. All rights reserved.</p>
           <div className="flex items-center gap-6 text-[11px]">
             <span>Lagos, Nigeria</span>
             <span>·</span>

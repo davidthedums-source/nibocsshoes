@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Send, MessageCircle, CheckCircle, ShoppingBag, ArrowUpRight, Loader2, Database } from 'lucide-react';
+import { X, Send, MessageCircle, CheckCircle, ShoppingBag, ArrowUpRight, Loader2, Database, Phone } from 'lucide-react';
 import { BUSINESS_INFO, FEATURED_SHOES } from '../data/footwearData';
 import { createCustomerOrder } from '../firebase/firestoreService';
 
@@ -99,8 +99,8 @@ export const OrderModal: React.FC<OrderModalProps> = ({
     'Custom Patina Specification',
   ];
 
-  const whatsappOrderLink = `https://wa.me/2349037880988?text=${encodeURIComponent(
-    `Hello NIBOCS SHOE! I would like to place an order/inquiry for:\n- Model: ${formData.productName}\n- Size: ${formData.size}\n- Leather: ${formData.leatherType}\n- Name: ${formData.fullName}\n- Location: ${formData.deliveryLocation}\n- Notes: ${formData.customNotes}`
+  const whatsappOrderLink = `https://wa.me/2348025906080?text=${encodeURIComponent(
+    `Hello NIBOCS Shoes! I would like to place an order/inquiry for:\n- Model: ${formData.productName}\n- Size: ${formData.size}\n- Leather: ${formData.leatherType}\n- Name: ${formData.fullName}\n- Location: ${formData.deliveryLocation}\n- Notes: ${formData.customNotes}`
   )}`;
 
   return (
@@ -265,7 +265,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="e.g. 09037880988"
+                    placeholder="e.g. 08025906080"
                     className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-900 border border-white/10 text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-[#c69c6d]"
                   />
                 </div>
@@ -342,6 +342,18 @@ export const OrderModal: React.FC<OrderModalProps> = ({
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Order via WhatsApp</span>
+                </a>
+              </div>
+
+              {/* Direct Call Quick Option */}
+              <div className="pt-2 text-center">
+                <a
+                  href={`tel:${BUSINESS_INFO.phone}`}
+                  className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-[#c69c6d] transition-colors"
+                  title={`Call ${BUSINESS_INFO.phone}`}
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#c69c6d]" />
+                  <span>Or order via phone call: <strong className="text-white underline">{BUSINESS_INFO.phone}</strong></span>
                 </a>
               </div>
             </form>

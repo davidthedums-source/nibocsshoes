@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     ? 'text-[#f5f5f7] group-hover:text-[#c69c6d]'
                     : 'text-stone-900 group-hover:text-[#8c6032]'
                 }`}>
-                  NIBOCS SHOE
+                  NIBOCS Shoes
                 </span>
               </a>
 
@@ -161,13 +161,27 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               )}
 
+              {/* Direct Tap to Call button (prominent) */}
+              <a
+                href={`tel:${BUSINESS_INFO.phone}`}
+                className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold rounded-xl border transition-all shadow-sm ${
+                  theme === 'dark'
+                    ? 'text-neutral-200 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border-white/15 hover:border-[#c69c6d]/50'
+                    : 'text-stone-800 hover:text-stone-950 bg-white/90 hover:bg-stone-50 border-stone-300 hover:border-[#8c6032]'
+                }`}
+                title={`Call NIBOCS Shoes: ${BUSINESS_INFO.phone}`}
+              >
+                <Phone className="w-3.5 h-3.5 text-[#c69c6d] shrink-0" />
+                <span className="font-bold">{BUSINESS_INFO.phone}</span>
+              </a>
+
               {/* Stripe-style glowing CTA button */}
               <a
                 href="#contact"
                 onClick={(e) => handleLinkClick(e, '#contact')}
-                className="group relative inline-flex items-center justify-center px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide text-neutral-950 bg-gradient-to-r from-[#c69c6d] via-[#d4af82] to-[#c69c6d] hover:brightness-110 active:scale-[0.98] rounded-xl transition-all duration-200 shadow-md shadow-[#c69c6d]/20 border border-white/20 whitespace-nowrap cursor-pointer"
+                className="hidden sm:inline-flex items-center justify-center px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold tracking-wide text-neutral-950 bg-gradient-to-r from-[#c69c6d] via-[#d4af82] to-[#c69c6d] hover:brightness-110 active:scale-[0.98] rounded-xl transition-all duration-200 shadow-md shadow-[#c69c6d]/20 border border-white/20 whitespace-nowrap cursor-pointer"
               >
-                <span>Contact Us</span>
+                <span>Contact</span>
                 <ArrowUpRight className="ml-1 w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
 
@@ -207,7 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span className={`text-xl font-serif font-bold tracking-wider ${
                     theme === 'dark' ? 'text-white' : 'text-stone-900'
                   }`}>
-                    NIBOCS SHOE
+                    NIBOCS Shoes
                   </span>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
                     theme === 'dark'
@@ -220,6 +234,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <p className={`text-xs mt-1 ${theme === 'dark' ? 'text-neutral-400' : 'text-stone-600'}`}>
                   Handcrafted Footwear & Manufacturing
                 </p>
+
+                {/* Prominent Tap to Call in Drawer Header */}
+                <div className="mt-3">
+                  <a
+                    href={`tel:${BUSINESS_INFO.phone}`}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 px-3 text-xs font-bold rounded-xl bg-gradient-to-r from-[#c69c6d] to-[#d8b082] text-neutral-950 shadow-md shadow-[#c69c6d]/20 active:scale-[0.98] transition-transform"
+                    title={`Call ${BUSINESS_INFO.phone}`}
+                  >
+                    <Phone className="w-3.5 h-3.5 text-neutral-950" />
+                    <span>Call Now: {BUSINESS_INFO.phone}</span>
+                  </a>
+                </div>
               </div>
 
               {/* Theme Selector in Mobile Menu */}

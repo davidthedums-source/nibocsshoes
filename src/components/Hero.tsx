@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowDown, ArrowUpRight, Compass, ShieldCheck, Sparkles, Layers, MousePointer2 } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Compass, ShieldCheck, Sparkles, Layers, MousePointer2, Phone } from 'lucide-react';
 import { ASSETS, BUSINESS_INFO } from '../data/footwearData';
 import { handleImageError } from '../lib/imageUtils';
 
@@ -92,27 +92,36 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onContactClick }) =>
 
             {/* Supporting Text */}
             <p className="text-base sm:text-lg md:text-xl text-neutral-300 font-normal leading-relaxed max-w-xl">
-              NIBOCS SHOE creates and sells quality footwear, combining skilled craftsmanship, modern style and attention to detail.
+              NIBOCS Shoes creates and sells quality footwear, combining skilled craftsmanship, modern style and attention to detail.
             </p>
 
             {/* Action Buttons - Stripe elevated styling */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
               <button
                 type="button"
                 onClick={onExploreClick}
                 className="group relative inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold tracking-wide text-neutral-950 bg-gradient-to-r from-[#c69c6d] via-[#d6b083] to-[#c69c6d] hover:brightness-110 active:scale-[0.98] rounded-xl transition-all duration-200 shadow-xl shadow-[#c69c6d]/20 border border-white/20 cursor-pointer"
               >
-                <span>Explore Our Shoes</span>
+                <span>Explore Shoes</span>
                 <ArrowDown className="ml-2 w-4 h-4 transition-transform group-hover:translate-y-0.5" />
               </button>
+
+              <a
+                href={`tel:${BUSINESS_INFO.phone}`}
+                className="inline-flex items-center justify-center px-5 py-3.5 text-sm font-semibold font-mono tracking-wide text-white hover:text-[#c69c6d] bg-neutral-900/90 hover:bg-neutral-800 border border-[#c69c6d]/40 hover:border-[#c69c6d] rounded-xl transition-all duration-200 backdrop-blur-md cursor-pointer shadow-lg shadow-black/40 group"
+                title={`Call ${BUSINESS_INFO.phone}`}
+              >
+                <Phone className="mr-2 w-4 h-4 text-[#c69c6d] animate-pulse group-hover:scale-110 transition-transform" />
+                <span>Call: {BUSINESS_INFO.phone}</span>
+              </a>
 
               <button
                 type="button"
                 onClick={onContactClick}
-                className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold tracking-wide text-neutral-200 hover:text-white bg-neutral-900/80 hover:bg-neutral-800/90 border border-white/10 hover:border-white/25 rounded-xl transition-all duration-200 backdrop-blur-md cursor-pointer shadow-lg shadow-black/40"
+                className="inline-flex items-center justify-center px-4 py-3.5 text-sm font-semibold tracking-wide text-neutral-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/25 rounded-xl transition-all duration-200 backdrop-blur-md cursor-pointer"
               >
-                <span>Contact NIBOCS</span>
-                <ArrowUpRight className="ml-2 w-4 h-4 text-neutral-400 group-hover:text-white" />
+                <span>Workshop Info</span>
+                <ArrowUpRight className="ml-1.5 w-4 h-4 text-neutral-400 group-hover:text-white" />
               </button>
             </div>
 

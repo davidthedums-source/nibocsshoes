@@ -19,8 +19,8 @@ import { ScheduleAppointmentModal } from './components/ScheduleAppointmentModal'
 import { AuthProvider } from './firebase/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { ShoeCraftBackground } from './components/ShoeCraftBackground';
-import { ShoeProduct, GalleryItem } from './data/footwearData';
-import { MessageCircle } from 'lucide-react';
+import { ShoeProduct, GalleryItem, BUSINESS_INFO } from './data/footwearData';
+import { MessageCircle, Phone } from 'lucide-react';
 
 function AtelierApp() {
   const { theme } = useTheme();
@@ -138,17 +138,28 @@ function AtelierApp() {
           onOpenDatabase={() => setDatabaseModalOpen(true)}
         />
 
-        {/* Floating WhatsApp Action */}
-        <div className="fixed bottom-6 right-6 z-30">
+        {/* Floating Quick Call & WhatsApp Actions */}
+        <div className="fixed bottom-6 right-6 z-30 flex items-center gap-2 sm:gap-2.5">
           <a
-            href="https://wa.me/2349037880988?text=Hello%20NIBOCS%20SHOE%2C%20I%20would%20like%20to%20inquire%20about%20your%20footwear."
+            href={`tel:${BUSINESS_INFO.phone}`}
+            aria-label={`Call NIBOCS Shoes: ${BUSINESS_INFO.phone}`}
+            title={`Call ${BUSINESS_INFO.phone}`}
+            className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-[#c69c6d] via-[#d8b082] to-[#c69c6d] text-neutral-950 font-bold text-xs shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-white/20 font-mono cursor-pointer"
+          >
+            <Phone className="w-4 h-4 text-neutral-950 animate-pulse" />
+            <span className="hidden sm:inline">Call: {BUSINESS_INFO.phone}</span>
+            <span className="sm:hidden text-[11px]">Call</span>
+          </a>
+
+          <a
+            href={BUSINESS_INFO.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
-            className="group flex items-center gap-2 p-3.5 sm:px-4 sm:py-3 rounded-full bg-[#25D366] text-neutral-950 font-semibold text-xs shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-white/20"
+            className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-[#25D366] text-neutral-950 font-semibold text-xs shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border border-white/20"
           >
-            <MessageCircle className="w-5 h-5 fill-current" />
-            <span className="hidden sm:inline font-bold">Chat with NIBOCS</span>
+            <MessageCircle className="w-4 h-4 fill-current" />
+            <span className="hidden sm:inline font-bold">WhatsApp</span>
           </a>
         </div>
 

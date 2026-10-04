@@ -21,10 +21,18 @@ export const Contact: React.FC<ContactProps> = ({ onOpenScheduleAppointment }) =
             <span>Atelier & Workshop</span>
             <span aria-hidden="true" className="text-neutral-400 dark:text-neutral-600">·</span>
             <span>Direct Contact</span>
+            <span aria-hidden="true" className="text-neutral-400 dark:text-neutral-600">·</span>
+            <a
+              href={`tel:${BUSINESS_INFO.phone}`}
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#14ae5c]/10 text-[#14ae5c] border border-[#14ae5c]/30 hover:bg-[#14ae5c]/20 transition-colors font-mono font-bold"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#14ae5c] animate-ping" />
+              <span>Call: {BUSINESS_INFO.phone}</span>
+            </a>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-semibold text-stone-900 dark:text-white tracking-tight">
-            Connect with NIBOCS SHOE.
+            Connect with NIBOCS Shoes.
           </h2>
 
           <p className="text-stone-600 dark:text-neutral-400 text-sm sm:text-base leading-relaxed">
@@ -37,20 +45,50 @@ export const Contact: React.FC<ContactProps> = ({ onOpenScheduleAppointment }) =
           {/* Left Column: Direct Contact & Atelier Details */}
           <div className="lg:col-span-5 space-y-6">
             {/* Atelier Identity Card */}
-            <div className="p-6 rounded-2xl glass-card border border-white/10 space-y-4">
+            <div className="p-6 rounded-2xl glass-card border border-white/10 space-y-5">
               <div>
                 <span className="text-[10px] font-mono tracking-widest text-[#c69c6d] uppercase">
                   Sangotedo Workshop
                 </span>
                 <h3 className="text-2xl font-serif font-semibold text-white tracking-wide mt-0.5">
-                  NIBOCS SHOE
+                  NIBOCS Shoes
                 </h3>
                 <p className="text-xs text-neutral-400 mt-1">
                   Handcrafted Footwear Manufacturing & Sales
                 </p>
               </div>
 
-              <div className="pt-2 space-y-3.5 text-xs text-neutral-300">
+              {/* Prominent Tap to Call Hero Box */}
+              <div className="p-4 rounded-xl bg-gradient-to-br from-neutral-900 via-neutral-900/95 to-neutral-950 border border-[#c69c6d]/40 shadow-xl space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-neutral-400 text-[11px] uppercase tracking-wider font-semibold">Direct Atelier Phone</span>
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#14ae5c] bg-[#14ae5c]/10 px-2 py-0.5 rounded-full border border-[#14ae5c]/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#14ae5c] animate-pulse" />
+                    Lines Open Now
+                  </span>
+                </div>
+                <a
+                  href={`tel:${BUSINESS_INFO.phone}`}
+                  className="block text-2xl sm:text-3xl font-mono font-bold text-white hover:text-[#c69c6d] tracking-wider transition-colors"
+                  title={`Tap to call ${BUSINESS_INFO.phone}`}
+                >
+                  {BUSINESS_INFO.phone}
+                </a>
+                <p className="text-[11px] text-neutral-400">
+                  Tap to call our craftsmen directly for inquiries, orders, and workshop visits.
+                </p>
+                <div className="pt-1">
+                  <a
+                    href={`tel:${BUSINESS_INFO.phone}`}
+                    className="w-full inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl font-semibold text-xs sm:text-sm text-neutral-950 bg-gradient-to-r from-[#c69c6d] via-[#e2be93] to-[#c69c6d] hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-[#c69c6d]/20 cursor-pointer"
+                  >
+                    <Phone className="w-4 h-4 text-neutral-950" />
+                    <span>Call {BUSINESS_INFO.phone}</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-1 space-y-3.5 text-xs text-neutral-300">
                 {/* Location */}
                 <div className="flex items-start gap-3 p-3 rounded-xl bg-neutral-900/80 border border-white/5">
                   <div className="p-2 rounded-lg bg-neutral-800 text-[#c69c6d] shrink-0">
@@ -78,30 +116,6 @@ export const Contact: React.FC<ContactProps> = ({ onOpenScheduleAppointment }) =
                       Walk-ins & scheduled fittings welcome
                     </p>
                   </div>
-                </div>
-
-                {/* Phone */}
-                <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-neutral-900/80 border border-white/5 group">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-neutral-800 text-[#c69c6d] shrink-0 group-hover:bg-[#c69c6d]/20 transition-colors">
-                      <Phone className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="text-neutral-400 text-[11px] block">Direct Phone</span>
-                      <a
-                        href={`tel:${BUSINESS_INFO.phone}`}
-                        className="text-white hover:text-[#c69c6d] font-semibold text-sm font-mono transition-colors"
-                      >
-                        {BUSINESS_INFO.phone}
-                      </a>
-                    </div>
-                  </div>
-                  <a
-                    href={`tel:${BUSINESS_INFO.phone}`}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-300 hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    Call
-                  </a>
                 </div>
 
                 {/* Email */}
@@ -147,7 +161,7 @@ export const Contact: React.FC<ContactProps> = ({ onOpenScheduleAppointment }) =
                     className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs font-semibold text-neutral-950 bg-[#c69c6d] hover:bg-[#d8b082] rounded-xl transition-colors cursor-pointer"
                   >
                     <Phone className="w-3.5 h-3.5" />
-                    <span>Call Atelier</span>
+                    <span>Call {BUSINESS_INFO.phone}</span>
                   </a>
 
                   <a

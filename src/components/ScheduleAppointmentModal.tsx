@@ -178,7 +178,7 @@ export const ScheduleAppointmentModal: React.FC<ScheduleAppointmentModalProps> =
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="0903 000 0000"
+                      placeholder="0802 590 6080"
                       className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-neutral-900 border border-white/10 text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-[#c69c6d]"
                     />
                   </div>
@@ -268,7 +268,7 @@ export const ScheduleAppointmentModal: React.FC<ScheduleAppointmentModalProps> =
               </div>
 
               {/* Submit Button */}
-              <div className="pt-2">
+              <div className="pt-2 space-y-2.5">
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -286,6 +286,17 @@ export const ScheduleAppointmentModal: React.FC<ScheduleAppointmentModalProps> =
                     </>
                   )}
                 </button>
+
+                <div className="text-center pt-1">
+                  <a
+                    href={`tel:${BUSINESS_INFO.phone}`}
+                    className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-[#c69c6d] transition-colors"
+                    title={`Call ${BUSINESS_INFO.phone}`}
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#c69c6d]" />
+                    <span>Need immediate booking? Call <strong className="text-white underline">{BUSINESS_INFO.phone}</strong></span>
+                  </a>
+                </div>
               </div>
             </form>
           </div>

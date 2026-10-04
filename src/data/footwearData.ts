@@ -303,15 +303,17 @@ export const WHY_NIBOCS = [
 export const WHY_LIBOCS = WHY_NIBOCS;
 
 export const BUSINESS_INFO = {
-  name: 'NIBOCS SHOE',
+  name: 'NIBOCS Shoes',
   tagline: 'Crafted to move with you.',
-  description: 'NIBOCS SHOE creates and sells quality footwear, combining skilled craftsmanship, modern style and attention to detail.',
+  description: 'NIBOCS Shoes creates and sells quality footwear, combining skilled craftsmanship, modern style and attention to detail.',
   subDescription: 'Crafted footwear. Modern style. Made with purpose.',
-  address: 'DKK Street, Sangotedo, Cannan Estate, Lagos, Nigeria',
-  phone: '09037880988',
-  phoneTel: '+2349037880988',
+  address: 'DKK Street, Sangotedo, Cannan Estate, Lagos',
+  phone: '08025906080',
+  phoneTel: '+2348025906080',
+  phoneDisplay: '08025906080',
+  phoneHref: 'tel:08025906080',
   email: 'eamos7738@gmail.com',
-  whatsappUrl: 'https://wa.me/2349037880988?text=Hello%20NIBOCS%20SHOE%2C%20I%20am%20interested%20in%20your%20footwear.',
+  whatsappUrl: 'https://wa.me/2348025906080?text=Hello%20NIBOCS%20Shoes%2C%20I%20am%20interested%20in%20your%20footwear.',
   coordinates: {
     lat: 6.4715,
     lng: 3.6288,

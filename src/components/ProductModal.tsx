@@ -1,6 +1,6 @@
 import React from 'react';
-import { X, ArrowUpRight, Check, ShieldCheck, Ruler, Layers, Sparkles } from 'lucide-react';
-import { ShoeProduct } from '../data/footwearData';
+import { X, ArrowUpRight, Check, ShieldCheck, Ruler, Layers, Sparkles, Phone } from 'lucide-react';
+import { ShoeProduct, BUSINESS_INFO } from '../data/footwearData';
 import { handleImageError } from '../lib/imageUtils';
 
 interface ProductModalProps {
@@ -122,7 +122,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
             </div>
 
             {/* Bottom Purchase Bar */}
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-4">
+            <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block">
                   Price Status
@@ -132,17 +132,28 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
                 </span>
               </div>
 
-              <a
-                href={`https://wa.me/2349037880988?text=${encodeURIComponent(
-                  `Hello NIBOCS SHOE! I would like to inquire about specifications and pricing for the ${product.name}.`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-neutral-950 bg-gradient-to-r from-[#c69c6d] via-[#d6b083] to-[#c69c6d] hover:brightness-110 active:scale-[0.98] rounded-xl transition-all shadow-md shadow-[#c69c6d]/20 cursor-pointer"
-              >
-                <span>Inquire on WhatsApp</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
+              <div className="flex flex-wrap items-center gap-2">
+                <a
+                  href={`tel:${BUSINESS_INFO.phone}`}
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-semibold font-mono text-neutral-200 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#c69c6d]/50 rounded-xl transition-colors cursor-pointer"
+                  title={`Call ${BUSINESS_INFO.phone}`}
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#c69c6d]" />
+                  <span>Call {BUSINESS_INFO.phone}</span>
+                </a>
+
+                <a
+                  href={`https://wa.me/2348025906080?text=${encodeURIComponent(
+                    `Hello NIBOCS Shoes! I would like to inquire about specifications and pricing for the ${product.name}.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-neutral-950 bg-gradient-to-r from-[#c69c6d] via-[#d6b083] to-[#c69c6d] hover:brightness-110 active:scale-[0.98] rounded-xl transition-all shadow-md shadow-[#c69c6d]/20 cursor-pointer"
+                >
+                  <span>WhatsApp</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

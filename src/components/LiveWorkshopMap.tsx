@@ -76,7 +76,7 @@ export const LiveWorkshopMap: React.FC = () => {
   };
 
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    'DKK Street, Sangotedo, Cannan Estate, Lagos, Nigeria'
+    BUSINESS_INFO.address
   )}`;
 
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${WORKSHOP_COORDINATES.lat},${WORKSHOP_COORDINATES.lng}`;
@@ -154,7 +154,7 @@ export const LiveWorkshopMap: React.FC = () => {
                 {/* Workshop Advanced Marker */}
                 <AdvancedMarker
                   position={WORKSHOP_COORDINATES}
-                  title="NIBOCS SHOE Workshop & Showroom"
+                  title="NIBOCS Shoes Workshop & Showroom"
                   onClick={() => setShowInfoWindow((prev) => !prev)}
                 >
                   <Pin
@@ -177,7 +177,7 @@ export const LiveWorkshopMap: React.FC = () => {
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="w-2 h-2 rounded-full bg-[#c69c6d]" />
                         <span className="text-xs font-bold tracking-tight text-neutral-900">
-                          NIBOCS SHOE
+                          NIBOCS Shoes
                         </span>
                       </div>
                       <p className="text-[11px] font-medium text-neutral-700 leading-snug">

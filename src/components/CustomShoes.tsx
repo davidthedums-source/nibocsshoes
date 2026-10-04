@@ -93,7 +93,7 @@ export const CustomShoes: React.FC<CustomShoesProps> = ({ onRequestCustom }) => 
               </h2>
 
               <p className="text-base text-stone-700 dark:text-neutral-300 leading-relaxed max-w-xl">
-                Looking for a unique color combination, specific sizing considerations, or an exclusive silhouette? Customers can contact NIBOCS SHOE about personalised or custom footwear tailored precisely to their preferences.
+                Looking for a unique color combination, specific sizing considerations, or an exclusive silhouette? Customers can contact NIBOCS Shoes about personalised or custom footwear tailored precisely to their preferences.
               </p>
             </div>
 
