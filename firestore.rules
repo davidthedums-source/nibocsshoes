@@ -1,0 +1,90 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        (request.auth.token.email == "eamos7738@gmail.com" || request.auth.token.email == "davidthedums@gmail.com") &&
+        request.auth.token.email_verified == true;
+    }
+
+    function isValidOrder(data) {
+      return data.keys().hasAll(['fullName', 'phone', 'productName', 'size', 'status', 'createdAt']) &&
+        data.keys().hasOnly(['fullName', 'phone', 'email', 'deliveryLocation', 'productName', 'size', 'leatherType', 'customNotes', 'status', 'createdAt']) &&
+        data.fullName is string && data.fullName.size() >= 2 && data.fullName.size() <= 100 &&
+        data.phone is string && data.phone.size() >= 5 && data.phone.size() <= 30 &&
+        (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
+        (!('deliveryLocation' in data) || (data.deliveryLocation is string && data.deliveryLocation.size() <= 200)) &&
+        data.productName is string && data.productName.size() >= 2 && data.productName.size() <= 150 &&
+        data.size is string && data.size.size() >= 2 && data.size.size() <= 50 &&
+        (!('leatherType' in data) || (data.leatherType is string && data.leatherType.size() <= 100)) &&
+        (!('customNotes' in data) || (data.customNotes is string && data.customNotes.size() <= 1000)) &&
+        data.status in ['received', 'in_production', 'ready', 'completed', 'cancelled'] &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidAppointment(data) {
+      return data.keys().hasAll(['fullName', 'phone', 'date', 'purpose', 'status', 'createdAt']) &&
+        data.keys().hasOnly(['fullName', 'phone', 'email', 'date', 'timeSlot', 'purpose', 'notes', 'status', 'createdAt']) &&
+        data.fullName is string && data.fullName.size() >= 2 && data.fullName.size() <= 100 &&
+        data.phone is string && data.phone.size() >= 5 && data.phone.size() <= 30 &&
+        (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
+        data.date is string && data.date.size() >= 5 && data.date.size() <= 30 &&
+        (!('timeSlot' in data) || (data.timeSlot is string && data.timeSlot.size() <= 50)) &&
+        data.purpose is string && data.purpose.size() >= 2 && data.purpose.size() <= 100 &&
+        (!('notes' in data) || (data.notes is string && data.notes.size() <= 500)) &&
+        data.status in ['scheduled', 'completed', 'cancelled'] &&
+        data.createdAt is timestamp;
+    }
+
+    // Orders Collection
+    match /orders/{orderId} {
+      allow get, list: if isAdmin();
+      allow create: if isValidId(orderId) &&
+        isValidOrder(incoming()) &&
+        incoming().status == 'received' &&
+        incoming().createdAt == request.time;
+      allow update: if isValidId(orderId) &&
+        isAdmin() &&
+        isValidOrder(incoming()) &&
+        incoming().createdAt == existing().createdAt;
+      allow delete: if isValidId(orderId) && isAdmin();
+    }
+
+    // Appointments Collection
+    match /appointments/{appointmentId} {
+      allow get, list: if isAdmin();
+      allow create: if isValidId(appointmentId) &&
+        isValidAppointment(incoming()) &&
+        incoming().status == 'scheduled' &&
+        incoming().createdAt == request.time;
+      allow update: if isValidId(appointmentId) &&
+        isAdmin() &&
+        isValidAppointment(incoming()) &&
+        incoming().createdAt == existing().createdAt;
+      allow delete: if isValidId(appointmentId) && isAdmin();
+    }
+  }
+}

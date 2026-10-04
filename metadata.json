@@ -1,0 +1,6 @@
+{
+  "name": "LIBOCS SHOES | Handcrafted Footwear & Manufacturing",
+  "description": "LIBOCS SHOES creates and sells quality footwear in Lagos, Nigeria, combining skilled craftsmanship, modern style, and bespoke custom design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

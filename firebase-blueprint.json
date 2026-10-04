@@ -1,0 +1,134 @@
+{
+  "entities": {
+    "order": {
+      "title": "order",
+      "description": "Footwear order or bespoke commission placed by a customer",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Customer full name"
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 30,
+          "description": "Contact phone number"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Optional email address"
+        },
+        "deliveryLocation": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Delivery address or city"
+        },
+        "productName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 150,
+          "description": "Name or silhouette of the shoe model"
+        },
+        "size": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50,
+          "description": "Shoe size specification"
+        },
+        "leatherType": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Selected leather finish or grade"
+        },
+        "customNotes": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Special styling or sizing requests"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["received", "in_production", "ready", "completed", "cancelled"],
+          "description": "Current status of the order"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of creation"
+        }
+      },
+      "required": ["fullName", "phone", "productName", "size", "status", "createdAt"]
+    },
+    "appointment": {
+      "title": "appointment",
+      "description": "Workshop visit and bespoke fitting appointment",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Client full name"
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 30,
+          "description": "Client phone number"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Client email"
+        },
+        "date": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 30,
+          "description": "Requested appointment date"
+        },
+        "timeSlot": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50,
+          "description": "Requested time window"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Purpose of workshop visit (e.g. Foot measurement, Bespoke consultation)"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Additional fitting notes"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["scheduled", "completed", "cancelled"],
+          "description": "Current appointment status"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of booking"
+        }
+      },
+      "required": ["fullName", "phone", "date", "purpose", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "order",
+      "description": "Collection of bespoke commissions and customer footwear orders"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "appointment",
+      "description": "Collection of scheduled workshop visits and fitting appointments"
+    }
+  }
+}
