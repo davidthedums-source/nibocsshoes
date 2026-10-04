@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Maximize2, Sparkles, Filter } from 'lucide-react';
 import { GALLERY_ITEMS, GalleryItem } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 interface GalleryProps {
   onOpenLightbox: (item: GalleryItem) => void;
@@ -69,6 +70,7 @@ export const Gallery: React.FC<GalleryProps> = ({ onOpenLightbox }) => {
                   className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
                   referrerPolicy="no-referrer"
+                  onError={handleImageError}
                 />
 
                 {/* Dark gradient overlay */}

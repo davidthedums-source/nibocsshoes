@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, Check, Sliders, Palette, Ruler, Sparkles, Layers } from 'lucide-react';
 import { ASSETS } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 interface CustomShoesProps {
   onRequestCustom: () => void;
@@ -58,6 +59,7 @@ export const CustomShoes: React.FC<CustomShoesProps> = ({ onRequestCustom }) => 
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
                   referrerPolicy="no-referrer"
+                  onError={handleImageError}
                 />
 
                 {/* Scrim and badge */}

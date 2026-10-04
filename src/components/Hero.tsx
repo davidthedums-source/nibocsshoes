@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowDown, ArrowUpRight, Compass, ShieldCheck, Sparkles, Layers, MousePointer2 } from 'lucide-react';
 import { ASSETS, BUSINESS_INFO } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 interface HeroProps {
   onExploreClick: () => void;
@@ -156,6 +157,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onContactClick }) =>
                     className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     loading="eager"
                     referrerPolicy="no-referrer"
+                    onError={handleImageError}
                   />
 
                   {/* Measured contrast scrim */}

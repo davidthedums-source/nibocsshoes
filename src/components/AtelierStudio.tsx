@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sliders, ArrowUpRight, Palette, Layers, Ruler, CheckCircle2, MessageCircle, Sparkles } from 'lucide-react';
 import { ASSETS } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 interface AtelierStudioProps {
   onCommissionSpec: (specDetails: string) => void;
@@ -107,6 +108,7 @@ export const AtelierStudio: React.FC<AtelierStudioProps> = ({ onCommissionSpec }
                   src={currentImage}
                   alt={selectedSilhouette}
                   className="w-full h-full object-cover object-center rounded-xl transition-all duration-500"
+                  onError={handleImageError}
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />

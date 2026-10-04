@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, Eye, Sparkles, SlidersHorizontal, Check } from 'lucide-react';
 import { CATEGORIES, FEATURED_SHOES, ShoeProduct } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 interface FeaturedShoesProps {
   onSelectProduct: (product: ShoeProduct) => void;
@@ -86,6 +87,7 @@ export const FeaturedShoes: React.FC<FeaturedShoesProps> = ({ onSelectProduct })
                   className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
                   referrerPolicy="no-referrer"
+                  onError={handleImageError}
                 />
 
                 {/* Scrim */}

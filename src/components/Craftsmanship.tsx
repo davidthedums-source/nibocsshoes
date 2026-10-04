@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Scissors, PenTool, Hammer, Sparkles, GitCommit, ChevronRight } from 'lucide-react';
 import { CRAFT_STEPS, CraftStep } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 export const Craftsmanship: React.FC = () => {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
@@ -141,6 +142,7 @@ export const Craftsmanship: React.FC = () => {
                   className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
                   referrerPolicy="no-referrer"
+                  onError={handleImageError}
                 />
 
                 {/* Scrim overlay */}

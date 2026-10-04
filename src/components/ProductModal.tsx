@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, ArrowUpRight, Check, ShieldCheck, Ruler, Layers, Sparkles } from 'lucide-react';
 import { ShoeProduct } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 interface ProductModalProps {
   product: ShoeProduct | null;
@@ -47,6 +48,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
               className="w-full h-full object-cover object-center"
               loading="lazy"
               referrerPolicy="no-referrer"
+              onError={handleImageError}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0f1117] md:from-transparent md:bg-gradient-to-r md:from-transparent md:to-[#0f1117]/70 pointer-events-none" />
 

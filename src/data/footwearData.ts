@@ -40,16 +40,16 @@ export interface GalleryItem {
   aspect: 'portrait' | 'landscape' | 'square';
 }
 
-// Visual assets from generation
+// Visual assets: Production-safe public URLs served statically on Vercel & AI Studio
 export const ASSETS = {
-  hero: '/src/assets/images/hero_libocs_shoe_1790782853567.jpg',
-  leather: '/src/assets/images/craft_leather_selection_1790782865783.jpg',
-  lasting: '/src/assets/images/craft_shoe_lasting_1790782877218.jpg',
-  finishing: '/src/assets/images/craft_shoe_finishing_1790782887367.jpg',
-  custom: '/src/assets/images/custom_bespoke_footwear_1790782898112.jpg',
-  femaleLoafer: '/src/assets/images/female_tassel_loafer_1790786960797.jpg',
-  menDerby: '/src/assets/images/men_formal_black_derby_1790788008274.jpg',
-  casualSneaker: '/src/assets/images/casual_sneaker_no_human_1790792121811.jpg',
+  hero: '/images/hero_libocs_shoe_1790782853567.jpg',
+  leather: '/images/craft_leather_selection_1790782865783.jpg',
+  lasting: '/images/craft_shoe_lasting_1790782877218.jpg',
+  finishing: '/images/craft_shoe_finishing_1790782887367.jpg',
+  custom: '/images/custom_bespoke_footwear_1790782898112.jpg',
+  femaleLoafer: '/images/female_tassel_loafer_1790786960797.jpg',
+  menDerby: '/images/men_formal_black_derby_1790788008274.jpg',
+  casualSneaker: '/images/casual_sneaker_no_human_1790792121811.jpg',
 };
 
 export const CATEGORIES = [

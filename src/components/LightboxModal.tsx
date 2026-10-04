@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Sparkles, MapPin } from 'lucide-react';
 import { GalleryItem } from '../data/footwearData';
+import { handleImageError } from '../lib/imageUtils';
 
 interface LightboxModalProps {
   item: GalleryItem | null;
@@ -35,6 +36,7 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({ item, onClose }) =
             alt={item.title}
             className="w-full h-full object-cover object-center"
             referrerPolicy="no-referrer"
+            onError={handleImageError}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
 
