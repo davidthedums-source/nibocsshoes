@@ -226,9 +226,10 @@ export function subscribeToOrders(
     },
     (error) => {
       if (onError) {
-        onError(error);
+        onError(error instanceof Error ? error : new Error(String(error)));
+      } else {
+        handleFirestoreError(error, OperationType.GET, collectionPath);
       }
-      handleFirestoreError(error, OperationType.GET, collectionPath);
     }
   );
 }
@@ -254,9 +255,10 @@ export function subscribeToAppointments(
     },
     (error) => {
       if (onError) {
-        onError(error);
+        onError(error instanceof Error ? error : new Error(String(error)));
+      } else {
+        handleFirestoreError(error, OperationType.GET, collectionPath);
       }
-      handleFirestoreError(error, OperationType.GET, collectionPath);
     }
   );
 }

@@ -54,6 +54,28 @@ export const AtelierDatabaseModal: React.FC<AtelierDatabaseModalProps> = ({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [copiedSchema, setCopiedSchema] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  const handleSignIn = async () => {
+    try {
+      setAuthError(null);
+      await signInWithGoogle();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (!msg.includes('popup-closed-by-user') && !msg.includes('cancelled-popup-request')) {
+        setAuthError('Authentication notice: ' + msg);
+      }
+    }
+  };
+
+  const handleLogOut = async () => {
+    try {
+      setAuthError(null);
+      await logOut();
+    } catch (err: unknown) {
+      console.error('Sign-out error:', err);
+    }
+  };
 
   // Subscribe to real-time database when signed in as admin
   useEffect(() => {
@@ -230,7 +252,7 @@ export const AtelierDatabaseModal: React.FC<AtelierDatabaseModalProps> = ({
             {user ? (
               <button
                 type="button"
-                onClick={logOut}
+                onClick={handleLogOut}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white transition-colors cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -239,7 +261,7 @@ export const AtelierDatabaseModal: React.FC<AtelierDatabaseModalProps> = ({
             ) : (
               <button
                 type="button"
-                onClick={signInWithGoogle}
+                onClick={handleSignIn}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#c69c6d] hover:bg-[#d8b082] text-neutral-950 font-semibold transition-colors cursor-pointer"
               >
                 <LogIn className="w-3.5 h-3.5" />
@@ -248,6 +270,19 @@ export const AtelierDatabaseModal: React.FC<AtelierDatabaseModalProps> = ({
             )}
           </div>
         </div>
+
+        {authError && (
+          <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between">
+            <span>{authError}</span>
+            <button
+              type="button"
+              onClick={() => setAuthError(null)}
+              className="text-amber-400 hover:text-white font-mono text-xs ml-2 cursor-pointer"
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         {/* If Not Admin */}
         {!isAdmin ? (
@@ -268,7 +303,7 @@ export const AtelierDatabaseModal: React.FC<AtelierDatabaseModalProps> = ({
             </div>
             <button
               type="button"
-              onClick={signInWithGoogle}
+              onClick={handleSignIn}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#c69c6d] hover:bg-[#d8b082] text-neutral-950 font-semibold text-xs transition-colors cursor-pointer"
             >
               <LogIn className="w-4 h-4" />

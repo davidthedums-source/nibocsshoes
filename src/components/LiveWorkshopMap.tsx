@@ -222,7 +222,7 @@ export const LiveWorkshopMap: React.FC = () => {
           /* Live Interactive Google Map Embed (Zero invalid key crash, fully interactive) */
           <div className="w-full h-full relative">
             <iframe
-              title="NIBOCS SHOE Workshop Live Map"
+              title="NIBOCS Shoes Workshop Live Map"
               src={embedMapUrl}
               className="w-full h-full border-0"
               style={{
