@@ -135,22 +135,20 @@ export async function createCustomerOrder(data: {
     payload.customNotes = data.customNotes.trim();
   }
 
-  try {
-    const docRef = doc(db, 'orders', orderId);
-    await setDoc(docRef, payload);
-
-    // Asynchronously dispatch to Supabase and REST backend API
-    insertSupabaseOrder(data).catch(() => {});
-    fetch('/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    }).catch(() => {});
-
-    return orderId;
-  } catch (error) {
-    handleFirestoreError(error, OperationType.CREATE, path);
+  // Supabase is the primary backend. Do not report success unless it confirms the save.
+  const supabaseOrderId = await insertSupabaseOrder(data);
+  if (!supabaseOrderId) {
+    throw new Error('Could not save your order to the NIBOCS database. Please try again.');
   }
+
+  // Keep a Firestore copy for the existing admin dashboard when Firebase is available.
+  try {
+    await setDoc(doc(db, 'orders', orderId), payload);
+  } catch (error) {
+    console.warn('Firestore mirror for order was not saved:', error);
+  }
+
+  return supabaseOrderId;
 }
 
 /**
@@ -187,22 +185,20 @@ export async function createWorkshopAppointment(data: {
     payload.notes = data.notes.trim();
   }
 
-  try {
-    const docRef = doc(db, 'appointments', apptId);
-    await setDoc(docRef, payload);
-
-    // Asynchronously dispatch to Supabase and REST backend API
-    insertSupabaseAppointment(data).catch(() => {});
-    fetch('/api/appointments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    }).catch(() => {});
-
-    return apptId;
-  } catch (error) {
-    handleFirestoreError(error, OperationType.CREATE, path);
+  // Supabase is the primary backend. Do not report success unless it confirms the save.
+  const supabaseAppointmentId = await insertSupabaseAppointment(data);
+  if (!supabaseAppointmentId) {
+    throw new Error('Could not save your appointment to the NIBOCS database. Please try again.');
   }
+
+  // Keep a Firestore copy for the existing admin dashboard when Firebase is available.
+  try {
+    await setDoc(doc(db, 'appointments', apptId), payload);
+  } catch (error) {
+    console.warn('Firestore mirror for appointment was not saved:', error);
+  }
+
+  return supabaseAppointmentId;
 }
 
 /**
