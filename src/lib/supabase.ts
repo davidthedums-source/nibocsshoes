@@ -118,51 +118,6 @@ export interface SupabaseAppointmentRow {
  * SQL Schema definition for Supabase SQL Editor:
  * Run this snippet in your Supabase project dashboard -> SQL Editor:
  */
-export const SUPABASE_SQL_SCHEMA = `
--- Orders table for NIBOCS SHOE Atelier
-create table if not exists public.orders (
-  id uuid default gen_random_uuid() primary key,
-  full_name text not null,
-  phone text not null,
-  email text,
-  delivery_location text,
-  product_name text not null,
-  size text not null,
-  leather_type text,
-  custom_notes text,
-  status text not null default 'received',
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- Appointments table for Workshop visits & fittings
-create table if not exists public.appointments (
-  id uuid default gen_random_uuid() primary key,
-  full_name text not null,
-  phone text not null,
-  email text,
-  appointment_date text not null,
-  time_slot text,
-  purpose text not null,
-  notes text,
-  status text not null default 'scheduled',
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- Row Level Security (RLS)
-alter table public.orders enable row level security;
-alter table public.appointments enable row level security;
-
--- Allow anonymous or authenticated customers to insert orders
-create policy "Allow public order submissions"
-  on public.orders for insert
-  with check (true);
-
--- Allow public appointment bookings
-create policy "Allow public appointment bookings"
-  on public.appointments for insert
-  with check (true);
-`;
-
 /**
  * Syncs an order to Supabase if configured.
  */
