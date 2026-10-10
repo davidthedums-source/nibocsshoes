@@ -23,8 +23,10 @@ function isValidAnonKey(key: unknown): key is string {
 }
 
 function initSupabaseClient(): SupabaseClient | null {
-  const rawUrl = import.meta.env.VITE_SUPABASE_URL;
-  const rawKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  // Public project URL and publishable key are safe for browser use.
+  // Vercel environment variables can override these defaults.
+  const rawUrl = import.meta.env.VITE_SUPABASE_URL || 'https://cuszpnnrsgmnbwwfvfvc.supabase.co';
+  const rawKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_QXf6uTuDjlamrsumo0khLQ_7pPLJOqp';
 
   if (!isValidSupabaseUrl(rawUrl) || !isValidAnonKey(rawKey)) {
     return null;
@@ -133,39 +135,30 @@ export async function insertSupabaseOrder(order: {
   if (!supabase) return null;
 
   try {
-    const { data, error } = await supabase
-      .from('orders')
-      .insert([
-        {
-          full_name: order.fullName,
-          phone: order.phone,
-          email: order.email || null,
-          delivery_location: order.deliveryLocation || null,
-          product_name: order.productName,
-          size: order.size,
-          leather_type: order.leatherType || null,
-          custom_notes: order.customNotes || null,
-          status: 'received',
-        },
-      ])
-      .select('id')
-      .single();
-
-    if (error) {
-      console.warn('Supabase order insert warning:', error.message);
+    const { data, error } = await supabase.functions.invoke('nibocs-bookings', {
+      body: {
+        kind: 'order',
+        fullName: order.fullName,
+        phone: order.phone,
+        email: order.email,
+        deliveryLocation: order.deliveryLocation,
+        productName: order.productName,
+        size: order.size,
+        leatherType: order.leatherType,
+        customNotes: order.customNotes,
+      },
+    });
+    if (error || !data?.success || !data?.id) {
+      console.warn('Supabase order save failed:', error?.message || data?.error || 'Unknown error');
       return null;
     }
-
-    return data?.id || null;
+    return data.id;
   } catch (err) {
-    console.warn('Supabase sync error:', err);
+    console.warn('Supabase order request failed:', err);
     return null;
   }
 }
 
-/**
- * Syncs an appointment to Supabase if configured.
- */
 export async function insertSupabaseAppointment(appt: {
   fullName: string;
   phone: string;
@@ -178,31 +171,25 @@ export async function insertSupabaseAppointment(appt: {
   if (!supabase) return null;
 
   try {
-    const { data, error } = await supabase
-      .from('appointments')
-      .insert([
-        {
-          full_name: appt.fullName,
-          phone: appt.phone,
-          email: appt.email || null,
-          appointment_date: appt.date,
-          time_slot: appt.timeSlot || null,
-          purpose: appt.purpose,
-          notes: appt.notes || null,
-          status: 'scheduled',
-        },
-      ])
-      .select('id')
-      .single();
-
-    if (error) {
-      console.warn('Supabase appointment insert warning:', error.message);
+    const { data, error } = await supabase.functions.invoke('nibocs-bookings', {
+      body: {
+        kind: 'appointment',
+        fullName: appt.fullName,
+        phone: appt.phone,
+        email: appt.email,
+        date: appt.date,
+        timeSlot: appt.timeSlot,
+        purpose: appt.purpose,
+        notes: appt.notes,
+      },
+    });
+    if (error || !data?.success || !data?.id) {
+      console.warn('Supabase appointment save failed:', error?.message || data?.error || 'Unknown error');
       return null;
     }
-
-    return data?.id || null;
+    return data.id;
   } catch (err) {
-    console.warn('Supabase sync error:', err);
+    console.warn('Supabase appointment request failed:', err);
     return null;
   }
 }
