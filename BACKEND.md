@@ -1,17 +1,22 @@
 # NIBOCS Shoes backend
 
-Express + TypeScript API for shoe orders and workshop appointments, backed by Supabase PostgreSQL.
+The live backend uses **Supabase PostgreSQL + the `nibocs-bookings` Edge Function**. The Vite/React frontend calls this function to save orders and workshop appointments. The existing Firebase/Firestore copy is retained for the current admin dashboard when Firebase is available.
 
-## Endpoints
-- `GET /api/health` — health and database configuration check
-- `GET /api/backend/status` — backend status
-- `POST /api/orders` — persist an order request
-- `POST /api/appointments` — persist an appointment request
+## Live resources
+- Supabase project: https://supabase.com/dashboard/project/cuszpnnrsgmnbwwfvfvc
+- Database schema: [`supabase/schema.sql`](./supabase/schema.sql)
+- Edge Function: `nibocs-bookings`
 
-## Setup
-1. In Supabase, open **SQL Editor** and run `supabase/schema.sql`.
-2. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to the server environment. Keep the service-role key private; never use it in a `VITE_*` variable or browser code.
-3. Install dependencies with `npm install`.
-4. Run locally with `npm run dev`; build with `npm run build`; start with `npm start`.
+## Request payloads
+The function accepts POST JSON with `kind: "order"` or `kind: "appointment"`.
+- Orders save customer name, phone, optional email and delivery location, product, size, leather preference, and notes.
+- Appointments save customer name, phone, optional email, date, time slot, purpose, and notes.
 
-The API returns HTTP 503 when the database is not configured rather than claiming an order was saved when it was not. Validate and test the frontend forms against these endpoint field names before launch.
+## Security
+- Both tables have Row Level Security enabled.
+- Browser roles `anon` and `authenticated` have no direct table access.
+- The Edge Function uses the server-side `SUPABASE_SERVICE_ROLE_KEY`. Never expose this secret in browser code or a `VITE_*` variable.
+- The project URL and publishable key in `src/lib/supabase.ts` are public client configuration; they are not privileged secrets.
+
+## Deployment
+Changes pushed to the `main` branch should deploy through Vercel if the GitHub repository is connected to the Vercel project. The Supabase Edge Function is deployed separately in Supabase.
