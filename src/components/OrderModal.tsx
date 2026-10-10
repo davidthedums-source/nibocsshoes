@@ -61,8 +61,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
       setIsSuccess(true);
     } catch (err) {
       console.error('Failed to submit order to database:', err);
-      // Still allow continuation
-      setIsSuccess(true);
+      setErrorMessage(err instanceof Error ? err.message : 'Could not submit your order. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -313,6 +312,10 @@ export const OrderModal: React.FC<OrderModalProps> = ({
                   className="w-full px-3.5 py-2 rounded-xl bg-neutral-900 border border-white/10 text-white text-xs placeholder-neutral-500 focus:outline-none focus:border-[#c69c6d] resize-none"
                 />
               </div>
+
+              {errorMessage && (
+                <p role="alert" className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-3">{errorMessage}</p>
+              )}
 
               {/* Actions */}
               <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
