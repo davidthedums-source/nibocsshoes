@@ -1,136 +1,87 @@
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
+import { createClient } from '@supabase/supabase-js';
 
 dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const app = express();
+const PORT = Number(process.env.PORT || 3000);
+app.use(express.json({ limit: '32kb' }));
+
+const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabase = supabaseUrl && supabaseKey
+  ? createClient(supabaseUrl, supabaseKey, { auth: { persistSession: false, autoRefreshToken: false } })
+  : null;
+const clean = (value: unknown, max = 500): string | null =>
+  typeof value === 'string' && value.trim() ? value.trim().slice(0, max) : null;
+
+app.get('/api/health', (_req, res) => res.json({
+  status: 'ok', service: 'NIBOCS Shoes API', timestamp: new Date().toISOString(),
+  databaseConfigured: Boolean(supabase),
+}));
+app.get('/api/backend/status', (_req, res) => res.json({
+  service: 'NIBOCS Shoes API', database: supabase ? 'Supabase configured' : 'Not configured', version: '1.1.0',
+}));
+
+app.post('/api/orders', async (req, res) => {
+  const body = req.body ?? {};
+  const full_name = clean(body.fullName, 120);
+  const phone = clean(body.phone, 40);
+  const product_name = clean(body.productName, 160);
+  const size = clean(String(body.size ?? ''), 30);
+  if (!full_name || !phone || !product_name || !size)
+    return res.status(400).json({ error: 'fullName, phone, productName and size are required.' });
+  if (!supabase)
+    return res.status(503).json({ error: 'Order storage is not configured. Configure server-side Supabase credentials.' });
+  const { data, error } = await supabase.from('orders').insert({
+    full_name, phone, product_name, size,
+    delivery_location: clean(body.deliveryLocation, 300),
+    leather_type: clean(body.leatherType, 100),
+    custom_notes: clean(body.customNotes, 2000),
+    status: 'received',
+  }).select('id, status, created_at').single();
+  if (error) {
+    console.error('Order insert failed:', error.message);
+    return res.status(500).json({ error: 'Could not save your order. Please try again later.' });
+  }
+  return res.status(201).json({ success: true, order: data, message: 'Your order request has been received.' });
+});
+
+app.post('/api/appointments', async (req, res) => {
+  const body = req.body ?? {};
+  const full_name = clean(body.fullName, 120);
+  const phone = clean(body.phone, 40);
+  const date = clean(body.date, 30);
+  const purpose = clean(body.purpose, 300);
+  if (!full_name || !phone || !date || !purpose)
+    return res.status(400).json({ error: 'fullName, phone, date and purpose are required.' });
+  if (!supabase)
+    return res.status(503).json({ error: 'Appointment storage is not configured. Configure server-side Supabase credentials.' });
+  const { data, error } = await supabase.from('appointments').insert({
+    full_name, phone, appointment_date: date, purpose,
+    time_slot: clean(body.timeSlot, 80), notes: clean(body.notes, 2000), status: 'scheduled',
+  }).select('id, status, created_at').single();
+  if (error) {
+    console.error('Appointment insert failed:', error.message);
+    return res.status(500).json({ error: 'Could not save your appointment. Please try again later.' });
+  }
+  return res.status(201).json({ success: true, appointment: data, message: 'Your appointment request has been received.' });
+});
 
 async function startServer() {
-  const app = express();
-  const PORT = 3000;
-  const isProd = process.env.NODE_ENV === 'production';
-
-  app.use(express.json());
-
-  // Static assets serving for production and dev resilience
-  const publicPath = path.resolve(__dirname, 'public');
-  const srcAssetsPath = path.resolve(__dirname, 'src/assets');
-  app.use(express.static(publicPath));
-  app.use('/src/assets', express.static(srcAssetsPath));
-  app.use('/assets', express.static(srcAssetsPath));
-
-  // Backend REST API Endpoints
-  app.get('/api/health', (req, res) => {
-    res.json({
-      status: 'healthy',
-      service: 'NIBOCS SHOE Atelier Backend',
-      timestamp: new Date().toISOString(),
-      database: 'Firestore Active & Supabase Adapter Ready',
-    });
-  });
-
-  app.get('/api/backend/status', (req, res) => {
-    const hasSupabaseUrl = Boolean(
-      process.env.VITE_SUPABASE_URL &&
-      !process.env.VITE_SUPABASE_URL.includes('your-project')
-    );
-
-    res.json({
-      activeBackend: 'Cloud Firestore',
-      supabaseSupported: true,
-      supabaseConnected: hasSupabaseUrl,
-      workshopLocation: 'Sangotedo, Cannan Estate, Lagos, Nigeria',
-      version: '1.0.0',
-    });
-  });
-
-  // REST API: Create Order
-  app.post('/api/orders', (req, res) => {
-    const { fullName, phone, productName, size, deliveryLocation, leatherType, customNotes } = req.body || {};
-
-    if (!fullName || !phone || !productName || !size) {
-      return res.status(400).json({
-        error: 'Missing required order fields (fullName, phone, productName, size).',
-      });
-    }
-
-    const orderId = `ord_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 7)}`;
-    return res.status(201).json({
-      success: true,
-      orderId,
-      message: 'Order recorded successfully by atelier backend.',
-      order: {
-        id: orderId,
-        fullName: fullName.trim(),
-        phone: phone.trim(),
-        productName: productName.trim(),
-        size: size.trim(),
-        deliveryLocation: deliveryLocation?.trim() || null,
-        leatherType: leatherType?.trim() || null,
-        customNotes: customNotes?.trim() || null,
-        status: 'received',
-        createdAt: new Date().toISOString(),
-      },
-    });
-  });
-
-  // REST API: Create Appointment
-  app.post('/api/appointments', (req, res) => {
-    const { fullName, phone, date, purpose, timeSlot, notes } = req.body || {};
-
-    if (!fullName || !phone || !date || !purpose) {
-      return res.status(400).json({
-        error: 'Missing required appointment fields (fullName, phone, date, purpose).',
-      });
-    }
-
-    const appointmentId = `apt_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 7)}`;
-    return res.status(201).json({
-      success: true,
-      appointmentId,
-      message: 'Workshop appointment scheduled successfully by atelier backend.',
-      appointment: {
-        id: appointmentId,
-        fullName: fullName.trim(),
-        phone: phone.trim(),
-        date: date.trim(),
-        purpose: purpose.trim(),
-        timeSlot: timeSlot?.trim() || null,
-        notes: notes?.trim() || null,
-        status: 'scheduled',
-        createdAt: new Date().toISOString(),
-      },
-    });
-  });
-
-  // Vite development middleware or static production serve
-  if (!isProd) {
-    const vite = await createViteServer({
-      server: {
-        middlewareMode: true,
-        hmr: false,
-      },
-      appType: 'spa',
-    });
+  if (process.env.NODE_ENV !== 'production') {
+    const vite = await createViteServer({ server: { middlewareMode: true, hmr: false }, appType: 'spa' });
     app.use(vite.middlewares);
   } else {
     const distPath = path.resolve(__dirname, 'dist');
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.resolve(distPath, 'index.html'));
-    });
+    app.get('*', (_req, res) => res.sendFile(path.resolve(distPath, 'index.html')));
   }
-
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`NIBOCS SHOE Backend & Web Server running on port ${PORT}`);
-  });
+  app.listen(PORT, '0.0.0.0', () => console.log(`NIBOCS Shoes server listening on ${PORT}`));
 }
-
-startServer().catch((err) => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+startServer().catch((error) => { console.error('Failed to start server:', error); process.exit(1); });
